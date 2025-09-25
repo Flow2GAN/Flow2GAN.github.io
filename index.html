@@ -1,0 +1,1998 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.88.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="" https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/normalize.css">
+
+    <title>Flow2GAN</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+
+<body data-new-gr-c-s-check-loaded="14.1091.0" data-gr-ext-installed="">
+    <div class="container">
+        <header role="banner">
+        </header>
+        <main role="main">
+            <article itemscope itemtype="https://schema.org/BlogPosting">
+                <div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+                    <div class="text-center">
+                        <h2 style="font-size: 30px">Flow2GAN</h2>
+                        <h2 style="font-size: 25px;">Hybrid Flow Matching and GAN with Multi-Resolution Network for One-/Two-Step High-fidelity Audio Generation</h2>
+                        <br>
+                    </div>
+                    <p>
+                        <b>Contents</b>
+                    <ul>
+                        <li><a href="#from_mel">Samples from MelSpectrogram</a></li>
+                        <li><a href="#from_encodec">Samples from Encodec audio token</a></li>
+                    </ul>
+                    </p>
+                </div>
+
+                <div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+                    <h2 id="from_mel" style="text-align: center;">Samples Generated from MelSpectrogram</h2>
+                    <h4>Libritts test-clean</h4>
+                    <div class="table-responsive pt-3">
+                        <table class="table table-hover pt-2">
+                            <thead>
+                                <tr>
+                                    <th style="vertical-align : middle;text-align: center">Reference</th>
+                                    <th style="vertical-align : middle;text-align: center">Flow2GAN(1step)</th>
+                                    <th style="vertical-align : middle;text-align: center">Flow2GAN(2step)</th>
+                                    <th style="vertical-align : middle;text-align: center">Vocos</th>
+                                    <th style="vertical-align : middle;text-align: center">BigVGAN</th>
+                                    <th style="vertical-align : middle;text-align: center">BigVGAN v2</th>
+                                    <th style="vertical-align : middle;text-align: center">RFWave</th>
+                                    <th style="vertical-align : middle;text-align: center">PeriodWave-Turbo</th>
+                                    <th style="vertical-align : middle;text-align: center">WaveFM</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+<tr>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/reference/1089_134686_000001_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan1step/1089_134686_000001_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan2step/1089_134686_000001_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/vocos/1089_134686_000001_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvgan/1089_134686_000001_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvganv2/1089_134686_000001_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/rfwave/1089_134686_000001_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/periodwave/1089_134686_000001_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/wavefm/1089_134686_000001_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+</tr>
+<tr>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/reference/121_121726_000004_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan1step/121_121726_000004_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan2step/121_121726_000004_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/vocos/121_121726_000004_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvgan/121_121726_000004_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvganv2/121_121726_000004_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/rfwave/121_121726_000004_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/periodwave/121_121726_000004_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/wavefm/121_121726_000004_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+</tr>
+<tr>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/reference/237_126133_000002_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan1step/237_126133_000002_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan2step/237_126133_000002_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/vocos/237_126133_000002_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvgan/237_126133_000002_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvganv2/237_126133_000002_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/rfwave/237_126133_000002_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/periodwave/237_126133_000002_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/wavefm/237_126133_000002_000003.wav" />Your browser does not support the audio element.
+                            </audio></td>
+</tr>
+<tr>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/reference/7021_79730_000046_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan1step/7021_79730_000046_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan2step/7021_79730_000046_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/vocos/7021_79730_000046_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvgan/7021_79730_000046_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvganv2/7021_79730_000046_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/rfwave/7021_79730_000046_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/periodwave/7021_79730_000046_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/wavefm/7021_79730_000046_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+</tr>
+<tr>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/reference/8230_279154_000002_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan1step/8230_279154_000002_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan2step/8230_279154_000002_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/vocos/8230_279154_000002_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvgan/8230_279154_000002_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvganv2/8230_279154_000002_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/rfwave/8230_279154_000002_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/periodwave/8230_279154_000002_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/wavefm/8230_279154_000002_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+</tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <p></p>
+                    <p></p>
+                    <h4>Libritts test-other</h4>
+                    <div class="table-responsive pt-3">
+                        <table class="table table-hover pt-2">
+                            <thead>
+                                <tr>
+                                    <th style="vertical-align : middle;text-align: center">Reference</th>
+                                    <th style="vertical-align : middle;text-align: center">Flow2GAN(1step)</th>
+                                    <th style="vertical-align : middle;text-align: center">Flow2GAN(2step)</th>
+                                    <th style="vertical-align : middle;text-align: center">Vocos</th>
+                                    <th style="vertical-align : middle;text-align: center">BigVGAN</th>
+                                    <th style="vertical-align : middle;text-align: center">BigVGAN v2</th>
+                                    <th style="vertical-align : middle;text-align: center">RFWave</th>
+                                    <th style="vertical-align : middle;text-align: center">PeriodWave-Turbo</th>
+                                    <th style="vertical-align : middle;text-align: center">WaveFM</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/reference/1688_142285_000000_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan1step/1688_142285_000000_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan2step/1688_142285_000000_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/vocos/1688_142285_000000_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvgan/1688_142285_000000_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvganv2/1688_142285_000000_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/rfwave/1688_142285_000000_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/periodwave/1688_142285_000000_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/wavefm/1688_142285_000000_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+</tr>
+<tr>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/reference/2414_128291_000008_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan1step/2414_128291_000008_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan2step/2414_128291_000008_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/vocos/2414_128291_000008_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvgan/2414_128291_000008_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvganv2/2414_128291_000008_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/rfwave/2414_128291_000008_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/periodwave/2414_128291_000008_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/wavefm/2414_128291_000008_000001.wav" />Your browser does not support the audio element.
+                            </audio></td>
+</tr>
+<tr>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/reference/2609_156975_000018_000004.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan1step/2609_156975_000018_000004.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan2step/2609_156975_000018_000004.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/vocos/2609_156975_000018_000004.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvgan/2609_156975_000018_000004.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvganv2/2609_156975_000018_000004.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/rfwave/2609_156975_000018_000004.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/periodwave/2609_156975_000018_000004.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/wavefm/2609_156975_000018_000004.wav" />Your browser does not support the audio element.
+                            </audio></td>
+</tr>
+<tr>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/reference/3764_168670_000004_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan1step/3764_168670_000004_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan2step/3764_168670_000004_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/vocos/3764_168670_000004_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvgan/3764_168670_000004_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvganv2/3764_168670_000004_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/rfwave/3764_168670_000004_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/periodwave/3764_168670_000004_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/wavefm/3764_168670_000004_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+</tr>
+<tr>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/reference/533_1066_000001_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan1step/533_1066_000001_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/flow2gan2step/533_1066_000001_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/vocos/533_1066_000001_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvgan/533_1066_000001_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/bigvganv2/533_1066_000001_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/rfwave/533_1066_000001_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/periodwave/533_1066_000001_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                            <audio controls="controls" style="width: 150px;">
+                                <source src="audios/mel/wavefm/533_1066_000001_000000.wav" />Your browser does not support the audio element.
+                            </audio></td>
+</tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                </div>
+        
+                <div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+                    <h2 id="from_encodec" style="text-align: center;">Samples Generated from Encodec audio token</h2>
+                    <h4>Speech</h4>
+                    <div class="table-responsive pt-3">
+                        <table class="table table-hover pt-2">
+                            <thead>
+                                <tr>
+                                    <th style="vertical-align : middle;text-align: center">Reference</th>
+                                    <th style="vertical-align : middle;text-align: center">BandWidth</th>
+                                    <th style="vertical-align : middle;text-align: center">Flow2GAN(1step)</th>
+                                    <th style="vertical-align : middle;text-align: center">Flow2GAN(2step)</th>
+                                    <th style="vertical-align : middle;text-align: center">Encodec</th>
+                                    <th style="vertical-align : middle;text-align: center">MBD</th>
+                                    <th style="vertical-align : middle;text-align: center">RFWave</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+<tr>
+                <td rowspan="4" style="vertical-align : middle;text-align:center;">
+                    <audio controls="controls" style="width: 150px;">
+                        <source src="audios/encodec/reference/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                    </audio></td>
+        
+                <td style="vertical-align : middle;text-align:center;">1.5 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_1.5/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_1.5/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_1.5/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_1.5/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_1.5/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">3.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_3.0/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_3.0/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_3.0/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_3.0/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_3.0/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">6.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_6.0/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_6.0/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_6.0/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_6.0/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_6.0/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">12.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_12.0/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_12.0/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_12.0/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_12.0/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_12.0/wav_SSB0693_SSB06930273.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+<tr>
+                <td rowspan="4" style="vertical-align : middle;text-align:center;">
+                    <audio controls="controls" style="width: 150px;">
+                        <source src="audios/encodec/reference/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                    </audio></td>
+        
+                <td style="vertical-align : middle;text-align:center;">1.5 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_1.5/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_1.5/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_1.5/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_1.5/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_1.5/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">3.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_3.0/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_3.0/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_3.0/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_3.0/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_3.0/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">6.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_6.0/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_6.0/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_6.0/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_6.0/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_6.0/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">12.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_12.0/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_12.0/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_12.0/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_12.0/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_12.0/wav_SSB1902_SSB19020298.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+<tr>
+                <td rowspan="4" style="vertical-align : middle;text-align:center;">
+                    <audio controls="controls" style="width: 150px;">
+                        <source src="audios/encodec/reference/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                    </audio></td>
+        
+                <td style="vertical-align : middle;text-align:center;">1.5 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_1.5/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_1.5/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_1.5/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_1.5/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_1.5/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">3.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_3.0/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_3.0/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_3.0/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_3.0/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_3.0/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">6.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_6.0/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_6.0/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_6.0/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_6.0/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_6.0/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">12.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_12.0/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_12.0/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_12.0/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_12.0/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_12.0/ex01_confused_00371.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+<tr>
+                <td rowspan="4" style="vertical-align : middle;text-align:center;">
+                    <audio controls="controls" style="width: 150px;">
+                        <source src="audios/encodec/reference/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                    </audio></td>
+        
+                <td style="vertical-align : middle;text-align:center;">1.5 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_1.5/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_1.5/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_1.5/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_1.5/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_1.5/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">3.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_3.0/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_3.0/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_3.0/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_3.0/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_3.0/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">6.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_6.0/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_6.0/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_6.0/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_6.0/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_6.0/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">12.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_12.0/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_12.0/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_12.0/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_12.0/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_12.0/ex03_laughing_00377.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+<tr>
+                <td rowspan="4" style="vertical-align : middle;text-align:center;">
+                    <audio controls="controls" style="width: 150px;">
+                        <source src="audios/encodec/reference/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                    </audio></td>
+        
+                <td style="vertical-align : middle;text-align:center;">1.5 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_1.5/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_1.5/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_1.5/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_1.5/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_1.5/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">3.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_3.0/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_3.0/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_3.0/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_3.0/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_3.0/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">6.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_6.0/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_6.0/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_6.0/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_6.0/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_6.0/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">12.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_12.0/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_12.0/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_12.0/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_12.0/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_12.0/jvs037_parallel100_wav24kHz16bit_VOICEACTRESS100_008.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <p></p>
+                    <p></p>
+
+                    <h4>Vocals</h4>
+                    <div class="table-responsive pt-3">
+                        <table class="table table-hover pt-2">
+                            <thead>
+                                <tr>
+                                    <th style="vertical-align : middle;text-align: center">Reference</th>
+                                    <th style="vertical-align : middle;text-align: center">BandWidth</th>
+                                    <th style="vertical-align : middle;text-align: center">Flow2GAN(1step)</th>
+                                    <th style="vertical-align : middle;text-align: center">Flow2GAN(2step)</th>
+                                    <th style="vertical-align : middle;text-align: center">Encodec</th>
+                                    <th style="vertical-align : middle;text-align: center">MBD</th>
+                                    <th style="vertical-align : middle;text-align: center">RFWave</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                <td rowspan="4" style="vertical-align : middle;text-align:center;">
+                    <audio controls="controls" style="width: 150px;">
+                        <source src="audios/encodec/reference/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                    </audio></td>
+        
+                <td style="vertical-align : middle;text-align:center;">1.5 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_1.5/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_1.5/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_1.5/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_1.5/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_1.5/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">3.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_3.0/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_3.0/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_3.0/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_3.0/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_3.0/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">6.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_6.0/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_6.0/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_6.0/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_6.0/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_6.0/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">12.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_12.0/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_12.0/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_12.0/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_12.0/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_12.0/english_wav_en005b_part10.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+<tr>
+                <td rowspan="4" style="vertical-align : middle;text-align:center;">
+                    <audio controls="controls" style="width: 150px;">
+                        <source src="audios/encodec/reference/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                    </audio></td>
+        
+                <td style="vertical-align : middle;text-align:center;">1.5 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_1.5/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_1.5/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_1.5/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_1.5/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_1.5/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">3.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_3.0/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_3.0/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_3.0/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_3.0/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_3.0/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">6.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_6.0/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_6.0/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_6.0/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_6.0/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_6.0/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">12.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_12.0/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_12.0/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_12.0/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_12.0/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_12.0/korean_wav_kr033b_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+<tr>
+                <td rowspan="4" style="vertical-align : middle;text-align:center;">
+                    <audio controls="controls" style="width: 150px;">
+                        <source src="audios/encodec/reference/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                    </audio></td>
+        
+                <td style="vertical-align : middle;text-align:center;">1.5 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_1.5/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_1.5/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_1.5/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_1.5/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_1.5/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">3.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_3.0/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_3.0/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_3.0/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_3.0/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_3.0/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">6.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_6.0/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_6.0/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_6.0/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_6.0/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_6.0/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">12.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_12.0/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_12.0/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_12.0/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_12.0/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_12.0/monophonic_western_male_10_pos_2_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+<tr>
+                <td rowspan="4" style="vertical-align : middle;text-align:center;">
+                    <audio controls="controls" style="width: 150px;">
+                        <source src="audios/encodec/reference/train_2030001164.wav" />Your browser does not support the audio element.
+                    </audio></td>
+        
+                <td style="vertical-align : middle;text-align:center;">1.5 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_1.5/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_1.5/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_1.5/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_1.5/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_1.5/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">3.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_3.0/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_3.0/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_3.0/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_3.0/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_3.0/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">6.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_6.0/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_6.0/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_6.0/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_6.0/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_6.0/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">12.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_12.0/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_12.0/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_12.0/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_12.0/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_12.0/train_2030001164.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+<tr>
+                <td rowspan="4" style="vertical-align : middle;text-align:center;">
+                    <audio controls="controls" style="width: 150px;">
+                        <source src="audios/encodec/reference/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                    </audio></td>
+        
+                <td style="vertical-align : middle;text-align:center;">1.5 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_1.5/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_1.5/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_1.5/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_1.5/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_1.5/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">3.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_3.0/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_3.0/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_3.0/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_3.0/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_3.0/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">6.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_6.0/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_6.0/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_6.0/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_6.0/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_6.0/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">12.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_12.0/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_12.0/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_12.0/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_12.0/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_12.0/Actor_08_03-02-03-02-02-01-08.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <p></p>
+                    <p></p>
+                    <h4>Sound Effects</h4>
+                    <div class="table-responsive pt-3">
+                        <table class="table table-hover pt-2">
+                            <thead>
+                                <tr>
+                                    <th style="vertical-align : middle;text-align: center">Reference</th>
+                                    <th style="vertical-align : middle;text-align: center">BandWidth</th>
+                                    <th style="vertical-align : middle;text-align: center">Flow2GAN(1step)</th>
+                                    <th style="vertical-align : middle;text-align: center">Flow2GAN(2step)</th>
+                                    <th style="vertical-align : middle;text-align: center">Encodec</th>
+                                    <th style="vertical-align : middle;text-align: center">MBD</th>
+                                    <th style="vertical-align : middle;text-align: center">RFWave</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                <td rowspan="4" style="vertical-align : middle;text-align:center;">
+                    <audio controls="controls" style="width: 150px;">
+                        <source src="audios/encodec/reference/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                    </audio></td>
+        
+                <td style="vertical-align : middle;text-align:center;">1.5 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_1.5/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_1.5/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_1.5/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_1.5/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_1.5/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">3.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_3.0/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_3.0/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_3.0/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_3.0/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_3.0/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">6.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_6.0/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_6.0/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_6.0/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_6.0/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_6.0/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">12.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_12.0/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_12.0/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_12.0/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_12.0/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_12.0/cpop_Yueding_xml-01_part20.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+<tr>
+                <td rowspan="4" style="vertical-align : middle;text-align:center;">
+                    <audio controls="controls" style="width: 150px;">
+                        <source src="audios/encodec/reference/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                    </audio></td>
+        
+                <td style="vertical-align : middle;text-align:center;">1.5 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_1.5/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_1.5/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_1.5/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_1.5/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_1.5/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">3.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_3.0/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_3.0/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_3.0/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_3.0/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_3.0/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">6.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_6.0/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_6.0/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_6.0/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_6.0/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_6.0/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">12.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_12.0/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_12.0/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_12.0/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_12.0/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_12.0/cpop_Yueding_accompaniment_part0.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+<tr>
+                <td rowspan="4" style="vertical-align : middle;text-align:center;">
+                    <audio controls="controls" style="width: 150px;">
+                        <source src="audios/encodec/reference/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                    </audio></td>
+        
+                <td style="vertical-align : middle;text-align:center;">1.5 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_1.5/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_1.5/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_1.5/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_1.5/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_1.5/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">3.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_3.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_3.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_3.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_3.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_3.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">6.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_6.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_6.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_6.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_6.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_6.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">12.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_12.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_12.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_12.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_12.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_12.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_legato&slide_up_01.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+<tr>
+                <td rowspan="4" style="vertical-align : middle;text-align:center;">
+                    <audio controls="controls" style="width: 150px;">
+                        <source src="audios/encodec/reference/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                    </audio></td>
+        
+                <td style="vertical-align : middle;text-align:center;">1.5 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_1.5/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_1.5/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_1.5/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_1.5/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_1.5/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">3.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_3.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_3.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_3.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_3.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_3.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">6.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_6.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_6.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_6.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_6.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_6.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">12.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_12.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_12.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_12.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_12.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_12.0/ccm_Erhu_Playing_Technique_Database_(ErhuPT)_dajigong_05.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+<tr>
+                <td rowspan="4" style="vertical-align : middle;text-align:center;">
+                    <audio controls="controls" style="width: 150px;">
+                        <source src="audios/encodec/reference/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                    </audio></td>
+        
+                <td style="vertical-align : middle;text-align:center;">1.5 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_1.5/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_1.5/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_1.5/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_1.5/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_1.5/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">3.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_3.0/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_3.0/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_3.0/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_3.0/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_3.0/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">6.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_6.0/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_6.0/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_6.0/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_6.0/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_6.0/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                <td style="vertical-align : middle;text-align:center;">12.0 kbps</td>
+            <td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan1step_bw_12.0/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/flow2gan2step_bw_12.0/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/encodec_bw_12.0/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/mbd_bw_12.0/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+<td style="vertical-align : middle;text-align:center;">
+                                <audio controls="controls" style="width: 150px;">
+                                    <source src="audios/encodec/rfwave_bw_12.0/cpop_Yueding_accompaniment_part80.wav" />Your browser does not support the audio element.
+                                </audio></td>
+</tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                </div>
+        
+
+            </article>
+        </main>
+    </div>
+
+</body>
+
+</html>
